@@ -14,7 +14,7 @@ python-dateutil==2.8.2
 pytz==2021.3
 rdkit-pypi
 requests==2.26.0
-scipy==1.7.1
+scipy
 six==1.16.0
 sqlparse==0.4.2
 threadpoolctl==3.0.0
