@@ -28,7 +28,8 @@ Jinja2==2.11.3
 pytest==6.2.4
 
 
-torch==1.7.0+cpu
+torch==1.9.1+cpu
+
 typing-extensions==3.10.0.2
 urllib3==1.26.7
 whitenoise==5.3.0
