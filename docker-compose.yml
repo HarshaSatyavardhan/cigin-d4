@@ -4,4 +4,4 @@ services:
     build: .
     ports:
       - "8080:8000"
-    command: gunicorn -k uvicorn.workers.UvicornWorker main:app --host 0.0.0.0 --reload
+    command: gunicorn main:app -w 2 -k uvicorn.workers.UvicornWorker
