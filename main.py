@@ -66,4 +66,6 @@ def prediction(solute, solvent):
     except Exception as err:
         print(err)
         response = {"error": "Invalid input"}
+        response["interaction_map"] = []
+        response["solvation"] = "No response due to invalid input"
     return {"prediction": response}
