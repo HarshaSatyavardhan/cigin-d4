@@ -1,10 +1,13 @@
 """ Implementation for the model used in CIGIN"""
+
 from copy import deepcopy
+
 import torch
 import torch.nn.functional as F
 from rdkit import Chem
 from torch import nn
-from molecular_graph import construct_molecular_graph
+
+from cigin_app.molecular_graph import construct_molecular_graph
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 

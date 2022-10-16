@@ -1,14 +1,11 @@
-from fastapi import FastAPI
-# import matplotlib.pyplot as plt
-# import seaborn as sns
 import torch
-from rdkit import Chem
-from models import Cigin
-
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from rdkit import Chem
+
+from cigin_app.models import Cigin
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-
 
 app = FastAPI()
 
@@ -28,6 +25,7 @@ def get_solv_free_energy(model, solute, solvent):
     solv_free_energy, interaction_map = model(solute, solvent)
     return solv_free_energy, interaction_map
 
+
 def load_model():
     """Load the model"""
     model = Cigin().to(DEVICE)
@@ -35,9 +33,11 @@ def load_model():
     model.eval()
     return model
 
-response = {}
-def predictions(solute, solvent):
 
+def predictions(solute, solvent):
+    response = {}
+    solute = solute.upper()
+    solvent = solvent.upper()
     mol = Chem.MolFromSmiles(solute)
     mol = Chem.AddHs(mol)
     solute = Chem.MolToSmiles(mol)
@@ -48,18 +48,22 @@ def predictions(solute, solvent):
 
     model = load_model()
 
-    delta_g, interaction_map =  model(solute, solvent)
+    delta_g, interaction_map = model(solute, solvent)
     response["interaction_map"] = (interaction_map.detach().numpy()).tolist()
     response["solvation"] = delta_g.item()
+    return response
 
 
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
 
+
 @app.get("/prediction")
 def prediction(solute, solvent):
-    results = predictions(solute, solvent)
+    try:
+        response = predictions(solute, solvent)
+    except Exception as err:
+        print(err)
+        response = {"error": "Invalid input"}
     return {"prediction": response}
-
-

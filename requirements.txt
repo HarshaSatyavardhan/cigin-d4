@@ -1,5 +1,6 @@
 -f https://download.pytorch.org/whl/torch_stable.html
 asgiref==3.4.1
+black
 certifi==2021.10.8
 charset-normalizer==2.0.7
 dgl
@@ -26,7 +27,7 @@ aiofiles==0.6.0
 fastapi==0.64.0
 Jinja2==2.11.3
 pytest==6.2.4
-
+pylint
 
 torch==1.11.0+cpu
 
